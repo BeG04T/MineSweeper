@@ -10,3 +10,11 @@ This file will be used for noteTaking since I was too dumb to bring my notebook 
   Idea 2)
     The game stores a list of all cells, each cell given whether it is a mine or not. This is cumbersome,
     uses a lot of space, so i'm going with Idea 1.
+
+2. Future idea:
+  Idea 1)
+    Mines won't be generated until the first tile is clicked, this is to prevent players from experiencing
+    failure immedietaly after hitting a tile, as that would be pretty unfair
+
+  Idea 2)
+    Automatically click connected tiles if said tile does not have nearby mines.
