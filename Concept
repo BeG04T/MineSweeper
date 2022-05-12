@@ -1,0 +1,12 @@
+This file will be used for noteTaking since I was too dumb to bring my notebook lol.
+
+1. The actual game itself:
+  Idea 1)
+    The game knows the following:
+        - Which cells (given on a 2-dimensional axis plane, aka given the x, y coordinates) contain mines.
+        - How wide and tall the board is, so a given input will be known if it is out of bounds or not.
+    This way, only the cells that have mines will be stored.
+
+  Idea 2)
+    The game stores a list of all cells, each cell given whether it is a mine or not. This is cumbersome,
+    uses a lot of space, so i'm going with Idea 1.
