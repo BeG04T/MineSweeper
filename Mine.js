@@ -5,28 +5,39 @@ class Game {
         this.mineCount = 1;
         this.width = 5;
         this.height = 5;
+        this.remainingTiles = this.width * this.height - this.mineCount
         const Coord = [
             Math.floor(Math.random() * this.width),
             Math.floor(Math.random() * this.height)
         ];
         this.mines = [];
         this.mines.push(Coord);
-        console.log(Coord + " is the mine's position")
     }
 
     get minePos(){
         return this.mines;
     }
 
+    clickTile(x, y) {
+        if (this.detectMine(x, y)) {
+            this.remainingTiles--
+            return this.remainingTiles + " Tiles Remain, nearby mines: " + this.nearbyMines(x, y)
+        } else {
+            return "you hit a mine, game over!"
+        }
+    }
+
     detectMine(x, y){
         if (x <= this.width && y <= this.height) {
-            if (!(this.mines.includes([x, y]))) {
-                return "Not a mine, Nearby Mines: " + this.nearbyMines(x, y)
+            const contains = (element) => (element[0] == x && element[1] == y)
+            if (!(this.mines.some(contains))) {
+                return true
             } else {
-                return "You hit a mine!"
+                return false
             }
         } else {
-            return "Out of Bounds"
+            console.log("Out of Bounds")
+            return false
         }
     }
 
@@ -36,20 +47,19 @@ class Game {
             for(let j = -1; j <= 1; j++){
                 let xPos = 0
                 let yPos = 0
-                const xBool = new Boolean((x + i) > this.width)
-                const yBool = new Boolean((y + j) > this.height)
-                if (xBool) {
+                if ((x + i) > this.width) {
                     xPos = 5
                 } else {
-                    xPos = max(0, x+i)
+                    xPos = Math.max(0, x+i)
                 }
 
-                if (yBool) {
+                if ((y + j) > this.height) {
                     yPos = 5
                 } else {
-                    yPos = max(0, y+j)
+                    yPos = Math.max(0, y+j)
                 }
-                if ([xPos, yPos] in this.mines) {
+                const contains_2 = (element) => (element[0] == xPos && element[1] == yPos)
+                if (this.mines.some(contains_2)) {
                     nearby++
                 }
             
@@ -60,6 +70,5 @@ class Game {
 
 const testGame = new Game
 minePos = testGame.minePos
-console.log([[1,2]].includes([1,2]))
-console.log(testGame.detectMine(minePos[0][0], minePos[0][1]))
-console.log(testGame.detectMine(minePos[0][0], minePos[0][1] - 1))
+console.log(testGame.clickTile(minePos[0][0], minePos[0][1]))
+console.log(testGame.clickTile(minePos[0][0], minePos[0][1] - 1))
