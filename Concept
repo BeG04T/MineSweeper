@@ -20,3 +20,8 @@ This file will be used for noteTaking since I was too dumb to bring my notebook 
     Automatically click connected tiles if said tile does not have nearby mines.
 
     token: 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
+
+Notes: 2022/05/17:
+  The minefield axis works similar to an upside down x-y axis, with going left increasing the x-axis, and down increasing
+  the y-axis. So for example tile (2,3) would be the third tile to the right, and fourth tile down, starting from
+  the top-left tile.

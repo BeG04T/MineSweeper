@@ -2,45 +2,60 @@
 //Currently the game of minesweeper is configured to a simple 5x5 game with 1 mine.
 class Game {
     constructor(){
-        this.mineCount = 5;
+        this.mineCount = 1;
         this.width = 5;
         this.height = 5;
         this.remainingTiles = this.width * this.height - this.mineCount
         const Coord = [
-            Math.floor(Math.random() * this.width),
-            Math.floor(Math.random() * this.height)
+            Math.floor(Math.random() * (this.width - 1)),
+            Math.floor(Math.random() * (this.height - 1))
         ];
         this.mines = [];
         this.mines.push(Coord);
         console.log("new game created")
+        console.log(Coord)
+    }
+
+    get twidth(){
+        return this.width;
+    }
+
+    get theight(){
+        return this.height;
     }
 
     get minePos(){
         return this.mines;
     }
 
+    get tiles(){
+        return this.remainingTiles
+    }
+
     clickTile(x, y) {
-        if (this.detectMine(x, y)) {
+        if (!this.detectMine(x, y)) {
             this.remainingTiles--
             if (this.remainingTiles == 0) {
-                return "you win! no more mines!"
+                console.log("you win! no more mines!")
+                return this.nearbyMines(x, y)
             }
-            return this.remainingTiles + " Tiles Remain, nearby mines: " + this.nearbyMines(x, y)
+            console.log(this.remainingTiles + " Tiles Remain, nearby mines: " + this.nearbyMines(x, y))
+            return this.nearbyMines(x, y)
         } else {
-            return "you hit a mine, game over!"
+            console.log("you hit a mine, game over!")
+            return -1
         }
     }
 
     detectMine(x, y){
-        if (x <= this.width && y <= this.height) {
+        if (x < this.width && y < this.height && x >= 0 && y >= 0) {
             const contains = (element) => (element[0] == x && element[1] == y)
-            if (!(this.mines.some(contains))) {
+            if (this.mines.some(contains)) {
                 return true
             } else {
                 return false
             }
         } else {
-            console.log("Out of Bounds")
             return false
         }
     }
@@ -49,21 +64,9 @@ class Game {
         let nearby = 0;
         for(let i = -1; i <= 1; i++){
             for(let j = -1; j <= 1; j++){
-                let xPos = 0
-                let yPos = 0
-                if ((x + i) > this.width) {
-                    xPos = 5
-                } else {
-                    xPos = Math.max(0, x+i)
-                }
-
-                if ((y + j) > this.height) {
-                    yPos = 5
-                } else {
-                    yPos = Math.max(0, y+j)
-                }
-                const contains_2 = (element) => (element[0] == xPos && element[1] == yPos)
-                if (this.mines.some(contains_2)) {
+                let xPos = x+i
+                let yPos = y+j
+                if (this.detectMine(xPos, yPos)) {
                     nearby++
                 }
             
@@ -74,5 +77,6 @@ class Game {
 
 //const testGame = new Game
 //minePos = testGame.minePos
-//console.log(testGame.clickTile(minePos[0][0], minePos[0][1]))
-//console.log(testGame.clickTile(minePos[0][0], minePos[0][1] - 1))
+//console.log(minePos)
+//console.log(testGame.clickTile(minePos[0][0], minePos[0][1] + 1))
+//console.log(testGame.clickTile(minePos[0][0], 0))

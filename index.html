@@ -6,16 +6,11 @@
 	<script src="jquery-3.6.0.js"></script>
 	<script src="Mine.js"> </script>
 	<script src="controller.js"> </script>
+			<!-- This css (The Container)should probably be used with jquerry, since gridtemplate really depends on how many
+			mines there are// -->
 	<style>
 		.notification {
 			color: red;
-		}
-
-		table,
-		th,
-		td {
-			border: 2px solid black;
-			border-collapse: collapse;
 		}
 
 		#Title {
@@ -25,20 +20,38 @@
 		#Button {
 			display: flex;
 			justify-content: center;
+			margin: 10px;
 		}
 
 		#GameBoard {
 			display: flex;
 			justify-content: center;
 		}
+		
+		.Mine {
+  			background-color: rgba(255, 255, 255, 0.8);
+  			border: 1px solid rgba(0, 0, 0, 0.8);
+  			padding: 20px;
+			width: 40px;
+  			font-size: 30px;
+  			text-align: center;
+		}
+
+		.ClickedMine {
+  			background-color: rgba(255, 255, 255, 0.8);
+  			border: 1px solid rgba(0, 0, 0, 0.8);
+  			padding: 20px;
+			width: 40px;
+  			font-size: 30px;
+  			text-align: center;
+		}
 	</style>
-	<title>CSC309 Assignment 3</title>
+	<title>MineSweeper</title>
 </head>
 
 <body>
 	<h1 id="Title">MineSweeper</h1>
 	<div id="GameBoard">
-
 	</div>
 	<div id="Button">
 		<input type="button" value="Start New Game!" id="start">
