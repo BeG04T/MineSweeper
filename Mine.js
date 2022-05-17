@@ -2,7 +2,7 @@
 //Currently the game of minesweeper is configured to a simple 5x5 game with 1 mine.
 class Game {
     constructor(){
-        this.mineCount = 1;
+        this.mineCount = 5;
         this.width = 5;
         this.height = 5;
         this.remainingTiles = this.width * this.height - this.mineCount
@@ -12,6 +12,7 @@ class Game {
         ];
         this.mines = [];
         this.mines.push(Coord);
+        console.log("new game created")
     }
 
     get minePos(){
@@ -21,6 +22,9 @@ class Game {
     clickTile(x, y) {
         if (this.detectMine(x, y)) {
             this.remainingTiles--
+            if (this.remainingTiles == 0) {
+                return "you win! no more mines!"
+            }
             return this.remainingTiles + " Tiles Remain, nearby mines: " + this.nearbyMines(x, y)
         } else {
             return "you hit a mine, game over!"
@@ -68,7 +72,7 @@ class Game {
     }
 }
 
-const testGame = new Game
-minePos = testGame.minePos
-console.log(testGame.clickTile(minePos[0][0], minePos[0][1]))
-console.log(testGame.clickTile(minePos[0][0], minePos[0][1] - 1))
+//const testGame = new Game
+//minePos = testGame.minePos
+//console.log(testGame.clickTile(minePos[0][0], minePos[0][1]))
+//console.log(testGame.clickTile(minePos[0][0], minePos[0][1] - 1))
