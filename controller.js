@@ -28,12 +28,18 @@ $(document).ready(function(){
 
     $("#GameBoard").on("click", ".Mine", function(foo) {
       const axis = this.id.split(",")
-      console.log(game.nearbyMines(parseInt(axis[0]), parseInt(axis[1])))
+      
       $(this).html(game.clickTile(parseInt(axis[0]), parseInt(axis[1])))
       $(this).removeClass("Mine");
       $(this).addClass("ClickedMine")
+      if (game.nearbyMines(parseInt(axis[0]), parseInt(axis[1])) == 0) {
+        for(let j = -1; j < 2; j++){
+          for (let i = -1; i < 2; i++){
+            console.log($(`#${parseInt(axis[0]) + i},${parseInt(axis[1]) + j}`))
+            $(`.Mine`).trigger("click")
+        }}
+      }
       if (game.tiles == 0){
-        console.log("reached here!")
         $("#start").show()
       }
     });
