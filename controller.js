@@ -15,7 +15,7 @@ $(document).ready(function(){
 
       for(let j = 0; j < game.theight; j++){
         for (let i = 0; i < game.twidth; i++){
-        $("#MineField").append(`<div class=\"Mine\" id=\"${i},${j}\"></div>`)
+        $("#MineField").append(`<div class=\"Mine\" id=\"M${i}+${j}\"></div>`)
       }}
 
         $("style").append("#MineField {" + 
@@ -27,16 +27,19 @@ $(document).ready(function(){
     }
 
     $("#GameBoard").on("click", ".Mine", function(foo) {
-      const axis = this.id.split(",")
-      
-      $(this).html(game.clickTile(parseInt(axis[0]), parseInt(axis[1])))
+      const axis = this.id.slice(1).split("+")
+      const nearby_Mines = game.clickTile(parseInt(axis[0]), parseInt(axis[1]))
+      if (nearby_Mines < 0) {
+        $(this).css("color", "red")
+        $("#start").show()
+      }
+      $(this).html(nearby_Mines)
       $(this).removeClass("Mine");
       $(this).addClass("ClickedMine")
       if (game.nearbyMines(parseInt(axis[0]), parseInt(axis[1])) == 0) {
         for(let j = -1; j < 2; j++){
           for (let i = -1; i < 2; i++){
-            console.log($(`#${parseInt(axis[0]) + i},${parseInt(axis[1]) + j}`))
-            $(`.Mine`).trigger("click")
+            $(`[id="M${parseInt(axis[0]) + i}+${parseInt(axis[1]) + j}"]`).trigger("click")
         }}
       }
       if (game.tiles == 0){

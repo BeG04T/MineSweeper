@@ -14,6 +14,7 @@ class Game {
         this.mines.push(Coord);
         console.log("new game created")
         console.log(Coord)
+        this.clicked = []
     }
 
     get twidth(){
@@ -33,17 +34,23 @@ class Game {
     }
 
     clickTile(x, y) {
-        if (!this.detectMine(x, y)) {
-            this.remainingTiles--
-            if (this.remainingTiles == 0) {
-                console.log("you win! no more mines!")
+        const contains_clicked = (element) => (element[0] == x && element[1] == y)
+        if (!this.clicked.some(contains_clicked)) {
+            this.clicked.push([x, y])
+            if (!this.detectMine(x, y)) {
+                this.remainingTiles--
+                if (this.remainingTiles == 0) {
+                    console.log("you win! no more mines!")
+                    return this.nearbyMines(x, y)
+                }
+                console.log(this.remainingTiles + " Tiles Remain, nearby mines: " + this.nearbyMines(x, y))
                 return this.nearbyMines(x, y)
+            } else {
+                console.log("you hit a mine, game over!")
+                return -1
             }
-            console.log(this.remainingTiles + " Tiles Remain, nearby mines: " + this.nearbyMines(x, y))
-            return this.nearbyMines(x, y)
         } else {
-            console.log("you hit a mine, game over!")
-            return -1
+            console.log("this tile was clicked already!")
         }
     }
 
