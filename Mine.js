@@ -1,19 +1,25 @@
 
 //Currently the game of minesweeper is configured to a simple 5x5 game with 1 mine.
 class Game {
-    constructor(){
-        this.mineCount = 1;
+    constructor(c){
+        this.mineCount = c;
         this.width = 5;
         this.height = 5;
         this.remainingTiles = this.width * this.height - this.mineCount
-        const Coord = [
-            Math.floor(Math.random() * (this.width - 1)),
-            Math.floor(Math.random() * (this.height - 1))
-        ];
         this.mines = [];
-        this.mines.push(Coord);
+
+        while (this.mines.length < this.mineCount) {
+            const Coord = [
+                Math.floor(Math.random() * (this.width - 1)),
+                Math.floor(Math.random() * (this.height - 1))
+            ];
+            const contains_mine = (element) => (element[0] == Coord[0] && element[1] == Coord[1])
+            if (!this.mines.some(contains_mine)) {
+                this.mines.push(Coord);
+            }
+        }
         console.log("new game created")
-        console.log(Coord)
+        console.log(this.mines)
         this.clicked = []
     }
 

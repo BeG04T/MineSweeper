@@ -1,4 +1,5 @@
 let game = 0
+let set_minecount = 2
 
 $(document).ready(function(){
 
@@ -7,7 +8,7 @@ $(document).ready(function(){
     $("#Button").click(_ => {create_game()});
 
     const create_game = _ => {
-        game = new Game()
+        game = new Game(set_minecount)
 
         $("#start").hide()
         $("#GameBoard").html("<div id=\"MineField\">" +
