@@ -1,5 +1,5 @@
 let game = 0
-let set_minecount = 2
+let set_minecount = 5
 
 $(document).ready(function(){
 
@@ -28,7 +28,11 @@ $(document).ready(function(){
     }
 
     $("#GameBoard").on("click", ".Mine", function(foo) {
+
       const axis = this.id.slice(1).split("+")
+      if (!game.initiated) {
+        game.generateMines(parseInt(axis[0]), parseInt(axis[1]))
+      }
       const nearby_Mines = game.clickTile(parseInt(axis[0]), parseInt(axis[1]))
       if (nearby_Mines < 0) {
         $(this).css("color", "red")
@@ -46,6 +50,10 @@ $(document).ready(function(){
       if (game.tiles == 0){
         $("#start").show()
       }
+    });
+
+    $("#GameBoard").on("contextmenu", ".Mine", function(foo) {
+      console.log("rightclicked")
     });
   
   });

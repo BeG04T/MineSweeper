@@ -29,19 +29,21 @@
 		}
 		
 		.Mine {
-  			background-color: rgba(255, 255, 255, 0.8);
+  			background-color: rgba(255, 255, 255, 0.5);
   			border: 1px solid rgba(0, 0, 0, 0.8);
   			padding: 20px;
-			width: 40px;
+			width: 34px;
   			font-size: 30px;
   			text-align: center;
+			height: 34px;
 		}
 
 		.ClickedMine {
   			background-color: rgba(255, 255, 255, 0.8);
   			border: 1px solid rgba(0, 0, 0, 0.8);
   			padding: 20px;
-			width: 40px;
+			width: 34px;
+			height: 34px;
   			font-size: 30px;
   			text-align: center;
 		}
@@ -49,7 +51,7 @@
 	<title>MineSweeper</title>
 </head>
 
-<body>
+<body oncontextmenu="return false;">
 	<h1 id="Title">MineSweeper</h1>
 	<div id="GameBoard">
 	</div>

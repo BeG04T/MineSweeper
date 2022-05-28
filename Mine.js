@@ -5,22 +5,17 @@ class Game {
         this.mineCount = c;
         this.width = 5;
         this.height = 5;
+        this.created = false;
         this.remainingTiles = this.width * this.height - this.mineCount
         this.mines = [];
 
-        while (this.mines.length < this.mineCount) {
-            const Coord = [
-                Math.floor(Math.random() * (this.width - 1)),
-                Math.floor(Math.random() * (this.height - 1))
-            ];
-            const contains_mine = (element) => (element[0] == Coord[0] && element[1] == Coord[1])
-            if (!this.mines.some(contains_mine)) {
-                this.mines.push(Coord);
-            }
-        }
+
         console.log("new game created")
-        console.log(this.mines)
         this.clicked = []
+    }
+
+    get initiated(){
+        return this.created;
     }
 
     get twidth(){
@@ -37,6 +32,28 @@ class Game {
 
     get tiles(){
         return this.remainingTiles
+    }
+
+    generateMines(x, y) {
+        /** 
+        Given an x,y coordinate, generate mines that are not on said tile
+        */
+        
+        while (this.mines.length < this.mineCount) {
+            const Coord = [
+                Math.floor(Math.random() * (this.width - 1)),
+                Math.floor(Math.random() * (this.height - 1))
+            ];
+            const contains_mine = (element) => (element[0] == Coord[0] && element[1] == Coord[1])
+            if (!this.mines.some(contains_mine) ) {
+                if (!((Math.abs(Coord[0] - x) <= 1) && Math.abs(Coord[1] - y) <= 1)) {
+                    this.mines.push(Coord);
+                }     
+            }
+        }
+        console.log("works")
+        this.created = true
+        console.log(this.mines)
     }
 
     clickTile(x, y) {
