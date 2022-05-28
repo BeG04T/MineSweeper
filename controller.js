@@ -5,7 +5,7 @@ $(document).ready(function(){
 
     
 
-    $("#Button").click(_ => {create_game()});
+    $("#start").click(_ => {create_game()});
 
     const create_game = _ => {
         game = new Game(set_minecount)
