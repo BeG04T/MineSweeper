@@ -38,6 +38,16 @@
 			height: 34px;
 		}
 
+		.FlaggedMine {
+  			background-color: rgb(255, 0, 0);
+  			border: 1px solid rgba(0, 0, 0, 0.8);
+  			padding: 20px;
+			width: 34px;
+  			font-size: 30px;
+  			text-align: center;
+			height: 34px;
+		}
+
 		.ClickedMine {
   			background-color: rgba(255, 255, 255, 0.8);
   			border: 1px solid rgba(0, 0, 0, 0.8);
@@ -53,11 +63,13 @@
 
 <body oncontextmenu="return false;">
 	<h1 id="Title">MineSweeper</h1>
-	<div id="GameBoard">
-	</div>
+	
 	<div id="Button">
-		<input type="button" value="Start New Game!" id="start">
+		<input type="button" value="Start Easy Game!" id="easy">
+		<input type="button" value="Start Hard Game!" id="hard">
 		<input type="button" value="Restart!" id="restart" style="display: none;">
+	</div>
+	<div id="GameBoard">
 	</div>
 
 </body>

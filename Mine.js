@@ -1,16 +1,15 @@
 
 //Currently the game of minesweeper is configured to a simple 5x5 game with 1 mine.
 class Game {
-    constructor(c){
+    constructor(c, w, h){
         this.mineCount = c;
-        this.width = 5;
-        this.height = 5;
+        this.width = w;
+        this.height = h;
         this.created = false;
         this.remainingTiles = this.width * this.height - this.mineCount
         this.mines = [];
 
 
-        console.log("new game created")
         this.clicked = []
     }
 
@@ -51,7 +50,6 @@ class Game {
                 }     
             }
         }
-        console.log("works")
         this.created = true
         console.log(this.mines)
     }

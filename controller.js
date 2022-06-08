@@ -1,18 +1,24 @@
 let game = 0
 let set_minecount = 5
+let standard_h = 5
+let standard_w = 5
+
+let right_mouse_down = false
+let left_mouse_down = false
 
 $(document).ready(function(){
 
     
 
-    $("#start").click(_ => {create_game()});
+    $("#easy").click(_ => {create_game(5, 5, 5)});
+    $("#hard").click(_ => {create_game(40, 14, 18)});
 
-    $("#restart").click(_ => {create_game()});
+    $("#restart").click(_ => {create_game(5, 5, 5)});
 
-    const create_game = _ => {
-        game = new Game(set_minecount)
+    const create_game = (mc, wi, he) => {
+        game = new Game(mc, wi, he)
 
-        $("#start").hide()
+        $("#easy").hide()
         $("#restart").show()
         $("#GameBoard").html("<div id=\"MineField\">" +
     "</div>")
@@ -40,7 +46,7 @@ $(document).ready(function(){
       if (nearby_Mines < 0) {
         $(this).css("color", "red")
         $("#restart").hide()
-        $("#start").show()
+        $("#easy").show()
       }
       $(this).html(nearby_Mines)
       $(this).removeClass("Mine");
@@ -53,12 +59,75 @@ $(document).ready(function(){
       }
       if (game.tiles == 0){
         $("#restart").hide()
-        $("#start").show()
+        $("#easy").show()
       }
     });
 
     $("#GameBoard").on("contextmenu", ".Mine", function(foo) {
-      console.log("rightclicked")
+      $(this).removeClass("Mine");
+      $(this).addClass("FlaggedMine")
     });
-  
+
+    $("#GameBoard").on("contextmenu", ".FlaggedMine", function(foo) {
+      $(this).removeClass("FlaggedMine");
+      $(this).addClass("Mine")
+    });
+
+    // Left and Right Click Auto-Click feature
+    
+    $("#GameBoard").on("mousedown", ".ClickedMine", function(foo) {
+      switch (foo.which) {
+        case 1:
+          left_mouse_down = true
+          break;
+
+        case 3:
+          right_mouse_down = true
+          break;
+
+        default:
+          console.log("Not a left or right click")
+          break;
+      }
+
+      const axis = this.id.slice(1).split("+")
+      if (left_mouse_down && right_mouse_down) {
+        let nearby_mine = parseInt($(this).html())
+        let flags = 0
+        for(let j = -1; j < 2; j++){
+          for (let i = -1; i < 2; i++){
+            if ($(`[id="M${parseInt(axis[0]) + i}+${parseInt(axis[1]) + j}"]`).hasClass("FlaggedMine")) {
+              flags++
+            }
+        }}
+        if (flags == nearby_mine) {
+          lrClear(parseInt(axis[0]), parseInt(axis[1]))
+        }
+      }
+      
+    });
+
+    const lrClear = function (x, y) {
+      for(let j = -1; j < 2; j++){
+        for (let i = -1; i < 2; i++){
+          $(`[id="M${x + i}+${y + j}"]`).trigger("click")
+      }}
+    }
+
+    $("#GameBoard").on("mouseup", ".ClickedMine", function(foo) {
+      switch (foo.which) {
+        case 1:
+          left_mouse_down = false
+          break;
+
+        case 3:
+          right_mouse_down = false
+          break;
+
+        default:
+          console.log("Not a left or right click")
+          break;
+      }
+    });
+
   });
